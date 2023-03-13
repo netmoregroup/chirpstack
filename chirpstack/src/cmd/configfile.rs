@@ -327,6 +327,13 @@ pub fn run() {
         {{/each}}
     ]
 
+    # MQTT fail-over servers, same format as server above.
+    failover_servers = [
+        {{#each integration.mqtt.failover_servers}}
+        "{{this}}",
+        {{/each}}
+    ]
+
     # Connect with the given username (optional)
     username="{{ integration.mqtt.username }}"
 
