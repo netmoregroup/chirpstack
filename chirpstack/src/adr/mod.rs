@@ -103,6 +103,7 @@ pub struct Request {
     pub tx_power_index: u8,
     pub nb_trans: u8,
     pub max_tx_power_index: u8,
+    pub min_tx_power_index: u8,
     pub required_snr_for_dr: f32,
     pub installation_margin: f32,
     pub min_dr: u8,

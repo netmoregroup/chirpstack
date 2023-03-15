@@ -87,6 +87,7 @@ pub mod test {
             tx_power_index: 0,
             nb_trans: 1,
             max_tx_power_index: 0,
+            min_tx_power_index: 0,
             required_snr_for_dr: 0.0,
             installation_margin: 0.0,
             min_dr: 0,

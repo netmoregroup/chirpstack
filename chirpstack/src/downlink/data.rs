@@ -874,6 +874,15 @@ impl Data {
 
         let ufs = self.uplink_frame_set.as_ref().unwrap();
 
+        // Extract the data rate from an Option<&str>
+        // Used to turn numerical data in a device variable into an number
+        fn dr_from_variables(value: Option<&String>, fallback: u8) -> u8 {
+            match value.and_then(|x| x.parse::<u8>().ok()) {
+                Some(n @ 0..=15) => n,
+                _ => fallback,
+            }
+        }
+
         let req = adr::Request {
             region_config_id: ufs.region_config_id.clone(),
             region_common_name: ufs.region_common_name,
@@ -895,6 +904,7 @@ impl Data {
                 }
                 max_tx_power_index
             },
+            min_tx_power_index: self.device_session.min_supported_tx_power_index as u8,
             required_snr_for_dr: match dr {
                 lrwn::region::DataRateModulation::Lora(params) => {
                     config::get_required_snr_for_sf(params.spreading_factor)?
@@ -902,8 +912,14 @@ impl Data {
                 _ => 0.0,
             },
             installation_margin: self.network_conf.installation_margin,
-            min_dr: self.network_conf.min_dr,
-            max_dr: self.network_conf.max_dr,
+            min_dr: dr_from_variables(
+                self.device.variables.get("min_dr"),
+                self.network_conf.min_dr,
+            ),
+            max_dr: dr_from_variables(
+                self.device.variables.get("max_dr"),
+                self.network_conf.max_dr,
+            ),
             uplink_history: self.device_session.uplink_adr_history.clone(),
         };
 
