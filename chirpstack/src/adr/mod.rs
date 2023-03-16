@@ -12,6 +12,7 @@ use lrwn::EUI64;
 pub mod default;
 pub mod lora_lr_fhss;
 pub mod lr_fhss;
+pub mod netmore;
 pub mod plugin;
 
 lazy_static! {
@@ -31,6 +32,9 @@ pub async fn setup() -> Result<()> {
     algos.insert(a.get_id(), Box::new(a));
 
     let a = lora_lr_fhss::Algorithm::new();
+    algos.insert(a.get_id(), Box::new(a));
+
+    let a = netmore::Algorithm::new();
     algos.insert(a.get_id(), Box::new(a));
 
     trace!("Setting up plugins");

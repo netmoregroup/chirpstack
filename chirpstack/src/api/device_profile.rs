@@ -513,11 +513,12 @@ pub mod test {
             .await
             .unwrap();
         let list_adr_algs_resp = list_adr_algs_resp.get_ref();
-        assert_eq!(3, list_adr_algs_resp.total_count);
-        assert_eq!(3, list_adr_algs_resp.result.len());
+        assert_eq!(4, list_adr_algs_resp.total_count);
+        assert_eq!(4, list_adr_algs_resp.result.len());
         assert_eq!("default", list_adr_algs_resp.result[0].id);
         assert_eq!("lr_fhss", list_adr_algs_resp.result[1].id);
         assert_eq!("lora_lr_fhss", list_adr_algs_resp.result[2].id);
+        assert_eq!("netmore", list_adr_algs_resp.result[3].id);
     }
 
     fn get_request<T>(user_id: &Uuid, req: T) -> Request<T> {
