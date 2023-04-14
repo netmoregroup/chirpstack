@@ -113,6 +113,7 @@ impl JoinRequest {
         ctx.get_join_request_payload()?;
         ctx.get_device_or_try_pr_roaming().await?;
         ctx.get_js_client()?;
+        ctx.js_client_use_external_join_server()?;
         ctx.get_application().await?;
         ctx.get_tenant().await?;
         ctx.get_device_profile().await?;
@@ -226,6 +227,28 @@ impl JoinRequest {
                 ));
             }
         });
+        Ok(())
+    }
+
+    /// Override the Join Server to explicity use the internal one is the flag "Use External Join
+    /// Server" has been set.
+    fn js_client_use_external_join_server(&mut self) -> Result<()> {
+        let jr = self.join_request.as_ref().unwrap();
+
+        // Note that "contains_key" means it will be false if not set, thus we invert the boolean
+        // check
+        let use_external_join_server = self
+            .device
+            .as_ref()
+            .unwrap()
+            .tags
+            .contains_key("UseExternalJoinServer");
+        if !use_external_join_server {
+            trace!(join_eui = %jr.join_eui, "UseExternalLogServer set, bypassing join server lookup");
+            // We shortcut here and therefore use the default logic which involves validate dev
+            // nonce and other data.
+            self.js_client = None;
+        }
         Ok(())
     }
 
