@@ -480,6 +480,32 @@ pub fn run() {
     # Use JSON encoding instead of Protobuf (binary).
     json={{ integration.kafka.json }}
 
+  # Apache Pulsar integration configuration.
+  [integration.pulsar]
+
+    # Server URL.
+    #
+    # The pulsar server address.
+    server="{{ integration.pulsar.server }}"
+
+    # Event topic template.
+    event_topic="{{ integration.pulsar.event_topic }}"
+
+    # Authentication settings for Oauth2
+    # Remove section to not use authentication
+    [integration.pulsar.oauth2_settings]
+       # Issuer url
+       issuer_url="{{integration.pulsar.oauth2_settings.issuer_url }}"
+       # Credentials url for oauth2
+       credentials_url="{{ integration.pulsar.oauth2_settings.credentials_url }}"
+       # Audience for the oauth2 setting (optional)
+       audience="{{ integration.pulsar.oauth2_settings.audience }}"
+       # Scope for the oauth2 setting (optional)
+       scope="{{ integration.pulsar.oauth2_settings.scope }}"
+
+    # Use JSON encoding instead of Protobuf (binary).
+    json={{ integration.pulsar.json }}
+
 
 # Codec configuration.
 [codec]
