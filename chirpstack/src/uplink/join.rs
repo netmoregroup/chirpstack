@@ -235,14 +235,17 @@ impl JoinRequest {
     fn js_client_use_external_join_server(&mut self) -> Result<()> {
         let jr = self.join_request.as_ref().unwrap();
 
-        // Note that "contains_key" means it will be false if not set, thus we invert the boolean
-        // check
-        let use_external_join_server = self
+        // Note that if it is set, we wish to use the external join-server, otherwise we should
+        // override the joinserver client with None to force internal join processing.
+        let use_external_join_server: bool = self
             .device
             .as_ref()
             .unwrap()
             .tags
-            .contains_key("UseExternalJoinServer");
+            .get("UseExternalJoinServer")
+            .map(|val| val.parse().unwrap_or_default())
+            .unwrap_or_default();
+
         if !use_external_join_server {
             trace!(join_eui = %jr.join_eui, "UseExternalLogServer set, bypassing join server lookup");
             // We shortcut here and therefore use the default logic which involves validate dev
