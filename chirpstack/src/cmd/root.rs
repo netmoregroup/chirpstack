@@ -2,7 +2,7 @@ use anyhow::Result;
 use tracing::info;
 
 use crate::gateway;
-use crate::{adr, api, backend, downlink, integration, region, storage};
+use crate::{adr, api, backend, downlink, integration, messagelog, region, storage};
 
 pub async fn run() -> Result<()> {
     info!(
@@ -19,6 +19,7 @@ pub async fn run() -> Result<()> {
     gateway::backend::setup().await?;
     downlink::setup().await;
     api::setup().await?;
+    messagelog::setup().await?;
 
     Ok(())
 }
