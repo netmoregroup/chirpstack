@@ -7,6 +7,7 @@ use uuid::Uuid;
 use lrwn::{AES128Key, MType, Payload, PhyPayload, EUI64};
 
 use crate::api::helpers::ToProto;
+use crate::messagelog;
 use crate::storage::{
     application,
     device::{self, DeviceClass},
@@ -35,6 +36,7 @@ pub struct TxAck {
     device: Option<device::Device>,
     device_relayed: Option<device::Device>,
     device_queue_item: Option<device_queue::DeviceQueueItem>,
+    log_entry: messagelog::LogEntry,
 }
 
 impl TxAck {
@@ -49,6 +51,12 @@ impl TxAck {
         if tx_ack.items.is_empty() {
             return Err(anyhow!("Zero items in tx ack"));
         }
+        let log_entry = messagelog::LogEntryBuilder::new()
+            .log_source(messagelog::Endpoint::Gateway)
+            .source_id(&tx_ack.gateway_id)
+            .log_destination(messagelog::Endpoint::Local)
+            .our_desitnation_id()
+            .build();
 
         let mut ctx = TxAck {
             downlink_tx_ack_status: {
@@ -78,6 +86,7 @@ impl TxAck {
             device: None,
             device_relayed: None,
             device_queue_item: None,
+            log_entry,
         };
 
         ctx.get_downlink_frame().await?;
@@ -135,6 +144,7 @@ impl TxAck {
             ctx.log_downlink_frame().await?;
             ctx.log_downlink_meta().await?;
         }
+        messagelog::send(ctx.log_entry).await;
 
         Ok(())
     }
@@ -572,6 +582,7 @@ impl TxAck {
         let phy =
             lrwn::PhyPayload::from_slice(&self.downlink_frame_item.as_ref().unwrap().phy_payload)?;
         self.phy_payload = Some(phy);
+        // TODO: Spindel, messagelog: Add log_event here
 
         Ok(())
     }
@@ -600,6 +611,7 @@ impl TxAck {
     }
 
     async fn log_downlink_frame(&mut self) -> Result<()> {
+        // TODO: Spindel, messagelog: Add log_event here??
         trace!("Logging downlink frame");
         let df = self.downlink_frame.as_ref().unwrap();
         let gw_df = df
