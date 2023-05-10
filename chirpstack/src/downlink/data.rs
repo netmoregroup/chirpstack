@@ -920,6 +920,7 @@ impl Data {
                 self.device.variables.get("max_dr"),
                 self.network_conf.max_dr,
             ),
+            skip_fcnt_check: self.device_session.skip_f_cnt_check,
             uplink_history: self.device_session.uplink_adr_history.clone(),
         };
 

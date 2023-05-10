@@ -128,6 +128,7 @@ pub mod test {
             min_dr: 0,
             max_dr: 5,
             uplink_history: vec![],
+            skip_fcnt_check: false,
         };
 
         let resp = p.handle(&req).await.unwrap();

@@ -93,6 +93,7 @@ pub mod test {
             min_dr: 0,
             max_dr: 0,
             uplink_history: vec![],
+            skip_fcnt_check: false,
         };
 
         struct Test {

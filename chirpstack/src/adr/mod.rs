@@ -113,6 +113,7 @@ pub struct Request {
     pub min_dr: u8,
     pub max_dr: u8,
     pub uplink_history: Vec<internal::UplinkAdrHistory>,
+    pub skip_fcnt_check: bool,
 }
 
 #[derive(Debug, PartialEq, Eq)]

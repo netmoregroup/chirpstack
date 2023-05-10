@@ -135,18 +135,7 @@ impl Handler for Algorithm {
             }
             resp.nb_trans = calc_nb_trans;
 
-            /* Go version:
-            maxNbTrans := 3
-            if req.SkipFCntValidation {
-                maxNbTrans = 1
-            } */
-
-            let max_nb_trans = 3;
-            /* TODO: Request has no skip fcnt validation value right now, and it seems not used
-             * otherwise. */
-            // if req.skip_validation {
-            //    max_nb_trans = 1;
-            // }
+            let max_nb_trans = if req.skip_fcnt_check { 1 } else { 3 };
 
             if resp.nb_trans > max_nb_trans {
                 resp.dr = max(resp.dr - 1, req.min_dr);
