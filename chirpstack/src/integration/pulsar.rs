@@ -8,7 +8,7 @@ use serde::Serialize;
 use async_trait::async_trait;
 use handlebars::Handlebars;
 use pulsar::Pulsar;
-use tracing::info;
+use tracing::{info, trace};
 
 use super::Integration as IntegrationTrait;
 use crate::config::PulsarIntegration as Config;
@@ -68,6 +68,11 @@ impl<'templates> Integration<'templates> {
         // Rather than keeping track of producers per-topic, we use the built-in "lazy" option to
         // do so. Less control of schema and other producer options, but simpler implementation.
         let acked = self.client.send(topic, msg).await?;
+        // Ack waiting is not mandatory, and can take an arbitrary amount of time, as there may be
+        // batching and more happening.
+        // In 2022 context, it is okay as events spawn in their own tasks and don't block other
+        // progress, however, if that changes, this may require some attention
+        trace!(topic = %topic, "Waiting for ack");
         acked.await?;
         Ok(())
     }
@@ -247,36 +252,39 @@ pub mod test {
     use crate::test;
     use futures::TryStreamExt;
     use regex::Regex;
-    use tracing::trace;
+    use std::time::Duration;
+    use tokio::time::timeout;
+    use tracing::{debug, trace};
 
     use pulsar::message::proto::command_subscribe::SubType;
     use uuid::Uuid;
     #[tokio::test]
     async fn test_pulsar() {
         let _guard = test::prepare().await;
-
         let conf = Config {
             server: "pulsar://pulsar:6650".to_string(),
             oauth2_settings: None,
             json: true,
             ..Default::default()
         };
-        let i = Integration::new(&conf).await.unwrap();
-        trace!("Integration created");
-
         let pulsar = Pulsar::builder(conf.server.clone(), pulsar::executor::TokioExecutor)
             .build()
             .await
             .unwrap();
 
-        let topic_re = Regex::new(r"application\..*\.device\..*.*\.event\..*").unwrap();
+        let topic_re = Regex::new(r".*application\..*").unwrap();
+        let topic =
+            "application.00000000-0000-0000-0000-000000000000.device.0102030405060708.event.up";
 
-        // Kafka tests uses  a loop with a time-delay to make sure it answers. is that necessary?
         let mut consumer: pulsar::Consumer<Vec<u8>, _> = pulsar
             .consumer()
             .with_consumer_name("test_consumer")
-            // We always know this topic, so that makes it easier
-            //.with_topic("application.00000000-0000-0000-0000-000000000000.device.0102030405060708.event.up")
+            // Regexp-only topics only work if the pulsar server HAS the topics first.
+            // So for a test-case where the topic doesn't exist until _after_ the first publish,
+            // we may not see it.
+            // This means that the first time tests run, they fail, but succeed afterwards, which
+            // is bad.
+            .with_topic(topic)
             .with_topic_regex(topic_re)
             .with_subscription("test_subscription")
             .with_subscription_type(SubType::Exclusive)
@@ -284,7 +292,12 @@ pub mod test {
             .await
             .expect("Failed to create consumer");
 
-        trace!("Consumer created");
+        info!(what = "pulsar_testcase", "Consumer created");
+        // Check that we have a connection before testing
+        consumer
+            .check_connection()
+            .await
+            .expect("Consumer connection is not healthy");
 
         let pl = integration::UplinkEvent {
             device_info: Some(integration::DeviceInfo {
@@ -294,21 +307,42 @@ pub mod test {
             }),
             ..Default::default()
         };
+        let expected = serde_json::to_vec(&pl).unwrap();
+
+        // Spawn a listener before we send messages.
+        let handle = tokio::spawn(async move {
+            debug!(what = "consumer", "Consumer waiting for event");
+            while let Some(msg) = consumer.try_next().await.unwrap() {
+                debug!(what = "consumer", topic = &msg.topic, "Event received");
+                assert_eq!(
+                    "persistent://public/default/application.00000000-0000-0000-0000-000000000000.device.0102030405060708.event.up",
+                    msg.topic
+                );
+                assert_eq!(expected, msg.payload.data);
+                debug!(what = "consumer", "Acking Event received");
+                consumer.ack(&msg).await.expect("Failed to ack");
+                break;
+            }
+            consumer
+                .close()
+                .await
+                .expect("Failed to unsubscribe consumer");
+        });
+
+        let i = Integration::new(&conf).await.unwrap();
+        trace!(what = "pulsar_testcase", "Integration created");
 
         i.uplink_event(&HashMap::new(), &pl).await.unwrap();
-        trace!("Event published");
+        debug!(what = "pulsar_testcase", "Event published");
 
-        //let msg = consumer.next().await.unwrap().unwrap();
-        while let Some(msg) = consumer.try_next().await.unwrap() {
-            trace!("Event received");
-            consumer.ack(&msg).await.expect("Failed to ack");
-            // The default is persistent in public namespace when using short keys.
-            assert_eq!(
-                "persistent://public/default/application.00000000-0000-0000-0000-000000000000.device.0102030405060708.event.up",
-                msg.topic
-            );
-            assert_eq!(serde_json::to_vec(&pl).unwrap(), msg.payload.data);
-            break;
-        }
+        let max_delay = Duration::from_secs(60);
+        info!(
+            what = "pulsar_testcase",
+            delay = ?max_delay,
+            "Waiting for result"
+        );
+        let _ = timeout(max_delay, handle)
+            .await
+            .expect("Timeout waiting for event data");
     }
 }
