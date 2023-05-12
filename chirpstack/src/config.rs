@@ -233,6 +233,7 @@ pub struct Integration {
     pub postgresql: PostgresqlIntegration,
     pub amqp: AmqpIntegration,
     pub kafka: KafkaIntegration,
+    pub pulsar: PulsarIntegration,
 }
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -310,6 +311,47 @@ impl Default for PostgresqlIntegration {
             dsn: "postgresql://chirpstack_integration:chirpstack_integration@localhost/chirpstack_integration?sslmode=disable".into(),
             max_open_connections: 10,
             min_idle_connections: 0,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(default)]
+pub struct PulsarIntegrationOAuth2 {
+    pub issuer_url: String,
+    pub credentials_url: String,
+    pub audience: Option<String>,
+    pub scope: Option<String>,
+}
+
+impl Default for PulsarIntegrationOAuth2 {
+    fn default() -> Self {
+        PulsarIntegrationOAuth2 {
+            issuer_url: "http://127.0.0.1".into(),
+            credentials_url: "http://127.0.0.1".into(),
+            audience: None,
+            scope: None,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(default)]
+pub struct PulsarIntegration {
+    pub server: String,
+    pub event_topic: String,
+    pub oauth2_settings: Option<PulsarIntegrationOAuth2>,
+    pub json: bool,
+}
+
+impl Default for PulsarIntegration {
+    fn default() -> Self {
+        PulsarIntegration {
+            server: "pulsar://127.0.0.1:6650".into(),
+            // event_topic: "non-persistent://public/default/application.{{application_id}}.device.{{dev_eui}}.event.{{event}}".into(),
+            event_topic: "application.{{application_id}}.device.{{dev_eui}}.event.{{event}}".into(),
+            oauth2_settings: None,
+            json: false,
         }
     }
 }

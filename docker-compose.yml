@@ -15,6 +15,7 @@ services:
       - mosquitto
       - rabbitmq
       - kafka
+      - pulsar
     environment:
       - DATABASE_URL=postgres://chirpstack_test:chirpstack_test@postgres/chirpstack_test?sslmode=disable
       - REDIS_HOST=redis
@@ -82,3 +83,9 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+
+  pulsar:
+    image: 'apachepulsar/pulsar:2.11.1'
+    command: 'bin/pulsar standalone'
+    ports:
+      - "6650:6650"

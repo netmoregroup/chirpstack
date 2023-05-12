@@ -28,6 +28,7 @@ mod mqtt;
 mod mydevices;
 mod pilot_things;
 mod postgresql;
+mod pulsar;
 mod redis;
 mod thingsboard;
 
@@ -65,6 +66,11 @@ pub async fn setup() -> Result<()> {
             "kafka" => integrations.push(Box::new(
                 kafka::Integration::new(&conf.integration.kafka)
                     .context("Setup Kafka integration")?,
+            )),
+            "pulsar" => integrations.push(Box::new(
+                pulsar::Integration::new(&conf.integration.pulsar)
+                    .await
+                    .context("Setup Pulsar integration")?,
             )),
             _ => {
                 return Err(anyhow!("Unexpected integration: {}", name));
