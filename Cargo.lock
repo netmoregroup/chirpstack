@@ -178,16 +178,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "async-attributes"
-version = "1.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a3203e79f4dd9bdda415ed03cf14dae5a2bf775c683a00f94e9cd1faf0f596e5"
-dependencies = [
- "quote",
- "syn 1.0.109",
-]
-
-[[package]]
 name = "async-channel"
 version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -268,18 +258,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "async-native-tls"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d57d4cec3c647232e1094dc013546c0b33ce785d8aeb251e1f20dfaf8a9a13fe"
-dependencies = [
- "futures-util",
- "native-tls",
- "thiserror",
- "url",
-]
-
-[[package]]
 name = "async-object-pool"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -335,7 +313,6 @@ version = "1.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "62565bb4402e926b29953c785397c6dc0391b7b446e45008b0049eb43cec6f5d"
 dependencies = [
- "async-attributes",
  "async-channel",
  "async-global-executor",
  "async-io",
@@ -372,19 +349,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.15",
-]
-
-[[package]]
-name = "asynchronous-codec"
-version = "0.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "06a0daa378f5fd10634e44b0a29b2a87b890657658e072a30d6f26e57ddee182"
-dependencies = [
- "bytes",
- "futures-sink",
- "futures-util",
- "memchr",
- "pin-project-lite",
 ]
 
 [[package]]
@@ -1463,12 +1427,6 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
-
-[[package]]
-name = "data-url"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d7439c3735f405729d52c3fbbe4de140eaf938a1fe47d227c27f8254d4302a5"
 
 [[package]]
 name = "dbl"
@@ -3324,15 +3282,11 @@ version = "5.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20f237570b5665b38c7d5228f9a1d2990e369c00e635704528996bcd5219f540"
 dependencies = [
- "async-native-tls",
- "async-std",
  "async-trait",
- "asynchronous-codec",
  "bit-vec",
  "bytes",
  "chrono",
  "crc",
- "data-url",
  "flate2",
  "futures",
  "futures-io",
@@ -3341,16 +3295,12 @@ dependencies = [
  "lz4",
  "native-tls",
  "nom",
- "oauth2",
- "openidconnect",
  "pem",
  "prost",
  "prost-build",
  "prost-derive",
  "rand",
  "regex",
- "serde",
- "serde_json",
  "snap",
  "tokio",
  "tokio-native-tls",
