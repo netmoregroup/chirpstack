@@ -69,7 +69,7 @@ lapin = "2.1"
 tokio-executor-trait = "2.1"
 tokio-reactor-trait = "1.1"
 rdkafka = { version = "0.29", features = ["cmake-build"] }
-pulsar = {  version = "5.1" }
+pulsar = { version = "5.1", default-features = false, features = ["compression", "tokio-runtime"] }
 # gRPC and Protobuf
 tonic = "0.9"
 tonic-web = "0.9"

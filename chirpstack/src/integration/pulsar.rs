@@ -29,7 +29,7 @@ struct EventTopicContext {
 
 impl<'templates> Integration<'templates> {
     pub async fn new(conf: &Config) -> Result<Integration<'templates>> {
-        use pulsar::authentication::oauth2::{OAuth2Authentication, OAuth2Params};
+        use pulsar::Authentication;
 
         info!("Initializing Pulsar integration");
         // topic templates
@@ -39,15 +39,13 @@ impl<'templates> Integration<'templates> {
 
         let mut builder = Pulsar::builder(conf.server.clone(), pulsar::executor::TokioExecutor);
 
-        if let Some(oauth_conf) = &conf.oauth2_settings {
-            let params = OAuth2Params {
-                issuer_url: oauth_conf.issuer_url.clone(),
-                credentials_url: oauth_conf.credentials_url.clone(),
-                audience: oauth_conf.audience.clone(),
-                scope: oauth_conf.scope.clone(),
+        // JWT authentication
+        if !conf.auth_token.is_empty() {
+            let auth = Authentication {
+                name: "token".to_string(),
+                data: conf.auth_token.clone().into_bytes(),
             };
-
-            builder = builder.with_auth_provider(OAuth2Authentication::client_credentials(params));
+            builder = builder.with_auth(auth);
         }
         let client = builder.build().await?;
         Ok(Integration {
@@ -263,7 +261,6 @@ pub mod test {
         let _guard = test::prepare().await;
         let conf = Config {
             server: "pulsar://pulsar:6650".to_string(),
-            oauth2_settings: None,
             json: true,
             ..Default::default()
         };

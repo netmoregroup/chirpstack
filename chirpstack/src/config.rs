@@ -317,30 +317,10 @@ impl Default for PostgresqlIntegration {
 
 #[derive(Serialize, Deserialize, Clone)]
 #[serde(default)]
-pub struct PulsarIntegrationOAuth2 {
-    pub issuer_url: String,
-    pub credentials_url: String,
-    pub audience: Option<String>,
-    pub scope: Option<String>,
-}
-
-impl Default for PulsarIntegrationOAuth2 {
-    fn default() -> Self {
-        PulsarIntegrationOAuth2 {
-            issuer_url: "http://127.0.0.1".into(),
-            credentials_url: "http://127.0.0.1".into(),
-            audience: None,
-            scope: None,
-        }
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone)]
-#[serde(default)]
 pub struct PulsarIntegration {
     pub server: String,
     pub event_topic: String,
-    pub oauth2_settings: Option<PulsarIntegrationOAuth2>,
+    pub auth_token: String,
     pub json: bool,
 }
 
@@ -350,7 +330,7 @@ impl Default for PulsarIntegration {
             server: "pulsar://127.0.0.1:6650".into(),
             // event_topic: "non-persistent://public/default/application.{{application_id}}.device.{{dev_eui}}.event.{{event}}".into(),
             event_topic: "application.{{application_id}}.device.{{dev_eui}}.event.{{event}}".into(),
-            oauth2_settings: None,
+            auth_token: "".to_string(),
             json: false,
         }
     }
