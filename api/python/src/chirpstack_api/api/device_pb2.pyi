@@ -47,7 +47,7 @@ class DeleteDeviceRequest(_message.Message):
     def __init__(self, dev_eui: _Optional[str] = ...) -> None: ...
 
 class Device(_message.Message):
-    __slots__ = ["application_id", "description", "dev_eui", "device_profile_id", "is_disabled", "name", "skip_fcnt_check", "tags", "variables"]
+    __slots__ = ["application_id", "description", "dev_eui", "device_profile_id", "is_disabled", "join_eui", "name", "skip_fcnt_check", "tags", "variables"]
     class TagsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -67,6 +67,7 @@ class Device(_message.Message):
     DEVICE_PROFILE_ID_FIELD_NUMBER: _ClassVar[int]
     DEV_EUI_FIELD_NUMBER: _ClassVar[int]
     IS_DISABLED_FIELD_NUMBER: _ClassVar[int]
+    JOIN_EUI_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     SKIP_FCNT_CHECK_FIELD_NUMBER: _ClassVar[int]
     TAGS_FIELD_NUMBER: _ClassVar[int]
@@ -76,11 +77,12 @@ class Device(_message.Message):
     dev_eui: str
     device_profile_id: str
     is_disabled: bool
+    join_eui: str
     name: str
     skip_fcnt_check: bool
     tags: _containers.ScalarMap[str, str]
     variables: _containers.ScalarMap[str, str]
-    def __init__(self, dev_eui: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., application_id: _Optional[str] = ..., device_profile_id: _Optional[str] = ..., skip_fcnt_check: bool = ..., is_disabled: bool = ..., variables: _Optional[_Mapping[str, str]] = ..., tags: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, dev_eui: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., application_id: _Optional[str] = ..., device_profile_id: _Optional[str] = ..., skip_fcnt_check: bool = ..., is_disabled: bool = ..., variables: _Optional[_Mapping[str, str]] = ..., tags: _Optional[_Mapping[str, str]] = ..., join_eui: _Optional[str] = ...) -> None: ...
 
 class DeviceActivation(_message.Message):
     __slots__ = ["a_f_cnt_down", "app_s_key", "dev_addr", "dev_eui", "f_cnt_up", "f_nwk_s_int_key", "n_f_cnt_down", "nwk_s_enc_key", "s_nwk_s_int_key"]
@@ -311,18 +313,20 @@ class GetDeviceRequest(_message.Message):
     def __init__(self, dev_eui: _Optional[str] = ...) -> None: ...
 
 class GetDeviceResponse(_message.Message):
-    __slots__ = ["created_at", "device", "device_status", "last_seen_at", "updated_at"]
+    __slots__ = ["class_enabled", "created_at", "device", "device_status", "last_seen_at", "updated_at"]
+    CLASS_ENABLED_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
     DEVICE_FIELD_NUMBER: _ClassVar[int]
     DEVICE_STATUS_FIELD_NUMBER: _ClassVar[int]
     LAST_SEEN_AT_FIELD_NUMBER: _ClassVar[int]
     UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
+    class_enabled: _common_pb2.DeviceClass
     created_at: _timestamp_pb2.Timestamp
     device: Device
     device_status: DeviceStatus
     last_seen_at: _timestamp_pb2.Timestamp
     updated_at: _timestamp_pb2.Timestamp
-    def __init__(self, device: _Optional[_Union[Device, _Mapping]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_seen_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., device_status: _Optional[_Union[DeviceStatus, _Mapping]] = ...) -> None: ...
+    def __init__(self, device: _Optional[_Union[Device, _Mapping]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_seen_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., device_status: _Optional[_Union[DeviceStatus, _Mapping]] = ..., class_enabled: _Optional[_Union[_common_pb2.DeviceClass, str]] = ...) -> None: ...
 
 class GetRandomDevAddrRequest(_message.Message):
     __slots__ = ["dev_eui"]

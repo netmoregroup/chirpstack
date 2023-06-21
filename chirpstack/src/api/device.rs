@@ -46,6 +46,11 @@ impl DeviceService for Device {
         let dev_eui = EUI64::from_str(&req_d.dev_eui).map_err(|e| e.status())?;
         let app_id = Uuid::from_str(&req_d.application_id).map_err(|e| e.status())?;
         let dp_id = Uuid::from_str(&req_d.device_profile_id).map_err(|e| e.status())?;
+        let join_eui = if req_d.join_eui.is_empty() {
+            EUI64::default()
+        } else {
+            EUI64::from_str(&req_d.join_eui).map_err(|e| e.status())?
+        };
 
         self.validator
             .validate(
@@ -64,6 +69,7 @@ impl DeviceService for Device {
             is_disabled: req_d.is_disabled,
             tags: fields::KeyValue::new(req_d.tags.clone()),
             variables: fields::KeyValue::new(req_d.variables.clone()),
+            join_eui,
             ..Default::default()
         };
 
@@ -107,6 +113,7 @@ impl DeviceService for Device {
                 is_disabled: d.is_disabled,
                 variables: d.variables.into_hashmap(),
                 tags: d.tags.into_hashmap(),
+                join_eui: d.join_eui.to_string(),
             }),
             created_at: Some(helpers::datetime_to_prost_timestamp(&d.created_at)),
             updated_at: Some(helpers::datetime_to_prost_timestamp(&d.updated_at)),
@@ -125,6 +132,7 @@ impl DeviceService for Device {
                 }),
                 false => None,
             },
+            class_enabled: d.enabled_class.to_proto().into(),
         });
         resp.metadata_mut()
             .insert("x-log-dev_eui", req.dev_eui.parse().unwrap());
@@ -145,6 +153,11 @@ impl DeviceService for Device {
         let dev_eui = EUI64::from_str(&req_d.dev_eui).map_err(|e| e.status())?;
         let app_id = Uuid::from_str(&req_d.application_id).map_err(|e| e.status())?;
         let dp_id = Uuid::from_str(&req_d.device_profile_id).map_err(|e| e.status())?;
+        let join_eui = if req_d.join_eui.is_empty() {
+            EUI64::default()
+        } else {
+            EUI64::from_str(&req_d.join_eui).map_err(|e| e.status())?
+        };
 
         // Does the user have access to the device?
         self.validator
@@ -183,6 +196,7 @@ impl DeviceService for Device {
             is_disabled: req_d.is_disabled,
             tags: fields::KeyValue::new(req_d.tags.clone()),
             variables: fields::KeyValue::new(req_d.variables.clone()),
+            join_eui,
             ..Default::default()
         })
         .await
@@ -253,6 +267,11 @@ impl DeviceService for Device {
         let filters = device::Filters {
             application_id: Some(app_id),
             multicast_group_id: mg_id,
+            search: if req.search.is_empty() {
+                None
+            } else {
+                Some(req.search.to_string())
+            },
             ..Default::default()
         };
 
@@ -1191,6 +1210,7 @@ pub mod test {
                 device_profile_id: dp.id.to_string(),
                 name: "test-device".into(),
                 dev_eui: "0102030405060708".into(),
+                join_eui: "0000000000000000".into(),
                 ..Default::default()
             }),
             get_resp.get_ref().device
@@ -1205,6 +1225,7 @@ pub mod test {
                     device_profile_id: dp.id.to_string(),
                     name: "test-device-updated".into(),
                     dev_eui: "0102030405060708".into(),
+                    join_eui: "0807060504030201".into(),
                     ..Default::default()
                 }),
             },
@@ -1225,6 +1246,7 @@ pub mod test {
                 device_profile_id: dp.id.to_string(),
                 name: "test-device-updated".into(),
                 dev_eui: "0102030405060708".into(),
+                join_eui: "0807060504030201".into(),
                 ..Default::default()
             }),
             get_resp.get_ref().device

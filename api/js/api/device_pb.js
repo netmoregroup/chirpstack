@@ -832,7 +832,8 @@ proto.api.Device.toObject = function(includeInstance, msg) {
     skipFcntCheck: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     isDisabled: jspb.Message.getBooleanFieldWithDefault(msg, 7, false),
     variablesMap: (f = msg.getVariablesMap()) ? f.toObject(includeInstance, undefined) : [],
-    tagsMap: (f = msg.getTagsMap()) ? f.toObject(includeInstance, undefined) : []
+    tagsMap: (f = msg.getTagsMap()) ? f.toObject(includeInstance, undefined) : [],
+    joinEui: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -908,6 +909,10 @@ proto.api.Device.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
          });
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setJoinEui(value);
       break;
     default:
       reader.skipField();
@@ -994,6 +999,13 @@ proto.api.Device.serializeBinaryToWriter = function(message, writer) {
   f = message.getTagsMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(9, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
+  }
+  f = message.getJoinEui();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
   }
 };
 
@@ -1166,6 +1178,24 @@ proto.api.Device.prototype.getTagsMap = function(opt_noLazyCreate) {
 proto.api.Device.prototype.clearTagsMap = function() {
   this.getTagsMap().clear();
   return this;};
+
+
+/**
+ * optional string join_eui = 10;
+ * @return {string}
+ */
+proto.api.Device.prototype.getJoinEui = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.api.Device} returns this
+ */
+proto.api.Device.prototype.setJoinEui = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
+};
 
 
 
@@ -2319,7 +2349,8 @@ proto.api.GetDeviceResponse.toObject = function(includeInstance, msg) {
     createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     updatedAt: (f = msg.getUpdatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     lastSeenAt: (f = msg.getLastSeenAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    deviceStatus: (f = msg.getDeviceStatus()) && proto.api.DeviceStatus.toObject(includeInstance, f)
+    deviceStatus: (f = msg.getDeviceStatus()) && proto.api.DeviceStatus.toObject(includeInstance, f),
+    classEnabled: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -2380,6 +2411,10 @@ proto.api.GetDeviceResponse.deserializeBinaryFromReader = function(msg, reader) 
       var value = new proto.api.DeviceStatus;
       reader.readMessage(value,proto.api.DeviceStatus.deserializeBinaryFromReader);
       msg.setDeviceStatus(value);
+      break;
+    case 6:
+      var value = /** @type {!proto.common.DeviceClass} */ (reader.readEnum());
+      msg.setClassEnabled(value);
       break;
     default:
       reader.skipField();
@@ -2448,6 +2483,13 @@ proto.api.GetDeviceResponse.serializeBinaryToWriter = function(message, writer) 
       5,
       f,
       proto.api.DeviceStatus.serializeBinaryToWriter
+    );
+  }
+  f = message.getClassEnabled();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      6,
+      f
     );
   }
 };
@@ -2635,6 +2677,24 @@ proto.api.GetDeviceResponse.prototype.clearDeviceStatus = function() {
  */
 proto.api.GetDeviceResponse.prototype.hasDeviceStatus = function() {
   return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional common.DeviceClass class_enabled = 6;
+ * @return {!proto.common.DeviceClass}
+ */
+proto.api.GetDeviceResponse.prototype.getClassEnabled = function() {
+  return /** @type {!proto.common.DeviceClass} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/**
+ * @param {!proto.common.DeviceClass} value
+ * @return {!proto.api.GetDeviceResponse} returns this
+ */
+proto.api.GetDeviceResponse.prototype.setClassEnabled = function(value) {
+  return jspb.Message.setProto3EnumField(this, 6, value);
 };
 
 

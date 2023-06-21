@@ -35,6 +35,9 @@ export class Device extends jspb.Message {
   getTagsMap(): jspb.Map<string, string>;
   clearTagsMap(): Device;
 
+  getJoinEui(): string;
+  setJoinEui(value: string): Device;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Device.AsObject;
   static toObject(includeInstance: boolean, msg: Device): Device.AsObject;
@@ -54,6 +57,7 @@ export namespace Device {
     isDisabled: boolean,
     variablesMap: Array<[string, string]>,
     tagsMap: Array<[string, string]>,
+    joinEui: string,
   }
 }
 
@@ -231,6 +235,9 @@ export class GetDeviceResponse extends jspb.Message {
   hasDeviceStatus(): boolean;
   clearDeviceStatus(): GetDeviceResponse;
 
+  getClassEnabled(): common_common_pb.DeviceClass;
+  setClassEnabled(value: common_common_pb.DeviceClass): GetDeviceResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetDeviceResponse.AsObject;
   static toObject(includeInstance: boolean, msg: GetDeviceResponse): GetDeviceResponse.AsObject;
@@ -246,6 +253,7 @@ export namespace GetDeviceResponse {
     updatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     lastSeenAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     deviceStatus?: DeviceStatus.AsObject,
+    classEnabled: common_common_pb.DeviceClass,
   }
 }
 

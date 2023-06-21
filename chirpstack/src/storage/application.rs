@@ -4,7 +4,7 @@ use std::str::FromStr;
 
 use anyhow::Result;
 use chrono::{DateTime, Utc};
-use diesel::backend::{self, Backend};
+use diesel::backend::Backend;
 use diesel::dsl;
 use diesel::pg::Pg;
 use diesel::prelude::*;
@@ -119,7 +119,7 @@ where
     DB: Backend,
     *const str: deserialize::FromSql<Text, DB>,
 {
-    fn from_sql(value: backend::RawValue<DB>) -> deserialize::Result<Self> {
+    fn from_sql(value: <DB as Backend>::RawValue<'_>) -> deserialize::Result<Self> {
         let string = String::from_sql(value)?;
         Ok(IntegrationKind::from_str(&string)?)
     }
@@ -151,7 +151,7 @@ pub enum IntegrationConfiguration {
 }
 
 impl deserialize::FromSql<Jsonb, Pg> for IntegrationConfiguration {
-    fn from_sql(value: backend::RawValue<Pg>) -> deserialize::Result<Self> {
+    fn from_sql(value: <Pg as Backend>::RawValue<'_>) -> deserialize::Result<Self> {
         let value = <serde_json::Value as deserialize::FromSql<Jsonb, Pg>>::from_sql(value)?;
         Ok(serde_json::from_value(value)?)
     }
@@ -252,10 +252,13 @@ pub struct PilotThingsConfiguration {
     pub token: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
 pub struct IftttConfiguration {
     pub key: String,
     pub uplink_values: [String; 2], // The first value is reserved for the DevEUI
+    pub arbitrary_json: bool,
+    pub event_prefix: String,
 }
 
 #[derive(Clone, Queryable, Insertable, PartialEq, Eq, Debug)]

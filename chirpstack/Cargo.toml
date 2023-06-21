@@ -3,7 +3,7 @@ name = "chirpstack"
 description = "ChirpStack is an open-source LoRaWAN(TM) Network Server"
 repository = "https://github.com/chirpstack/chirpstack"
 homepage = "https://www.chirpstack.io/"
-version = "4.3.2"
+version = "4.4.0-test.1"
 authors = ["Orne Brocaar <info@brocaar.com>"]
 edition = "2021"
 publish = false
@@ -23,19 +23,19 @@ handlebars = "4.3"
 
 # Database
 validator = "0.16"
-diesel = { version = "2.0", features = [
+diesel = { version = "2.1", features = [
 	"chrono",
 	"postgres",
 	"r2d2",
 	"uuid",
 	"serde_json",
 	"numeric",
+	"64-column-tables",
 ] }
-diesel_migrations = { version = "2.0" }
+diesel_migrations = { version = "2.1" }
 r2d2 = "0.8"
 bigdecimal = "0.3"
 redis = { version = "0.23", features = ["r2d2", "cluster", "tls-rustls"] }
-pq-sys = { version = "0.4", features = ["pkg-config"] }
 
 # Logging
 tracing = "0.1"
@@ -52,23 +52,23 @@ backend = { path = "../backend" }
 # HTTP
 reqwest = { version = "0.11", features = [
 	"json",
-	"rustls-tls",
+	"rustls-tls-native-roots",
 ], default-features = false }
 
 # Integrations
 aws-types = "0.55"
 aws-credential-types = "0.55"
 aws-config = { version = "0.55", default-features = false }
-aws-sdk-sns = "0.25"
+aws-sdk-sns = "0.28"
 hmac = "0.12"
 sha2 = "0.10"
 urlencoding = "2.1"
 geohash = "0.13"
-gcp_auth = "0.7"
+gcp_auth = "0.8"
 lapin = "2.1"
 tokio-executor-trait = "2.1"
 tokio-reactor-trait = "1.1"
-rdkafka = { version = "0.29", features = ["cmake-build"] }
+rdkafka = { version = "0.32", default-features = false, features = ["tokio", "cmake-build"] }
 
 # gRPC and Protobuf
 tonic = "0.9"
@@ -99,11 +99,11 @@ anyhow = "1.0"
 pbkdf2 = { version = "0.12", features = ["simple"] }
 rand_core = { version = "0.6", features = ["std"] }
 jsonwebtoken = "8.2"
-openssl = { version = "0.10", features = ["vendored"] }
-openidconnect = { version = "2.5", features = ["accept-rfc3339-timestamps"] }
+openssl = { version = "0.10" }
+openidconnect = { version = "3.1", features = ["accept-rfc3339-timestamps"] }
 
 # MQTT
-paho-mqtt = { version = "0.12", features = ["vendored-ssl"] }
+paho-mqtt = { version = "0.12", features = ["ssl"] }
 hex = "0.4"
 
 # Codecs
@@ -125,13 +125,14 @@ base64 = "0.21"
 async-recursion = "1.0"
 regex = "1.7"
 petgraph = "0.6"
-prometheus-client = "0.20"
+prometheus-client = "0.21"
 pin-project = "1.0"
 
 # Development and testing
 [dev-dependencies]
 httpmock = "0.6"
 bytes = "1.4"
+dotenv = "0.15"
 
 # Debian packaging.
 [package.metadata.deb]
@@ -181,15 +182,26 @@ suggests = "postgresql, mosquitto, redis"
 maintainer-scripts = "debian/"
 systemd-units = { enable = true }
 
-[package.metadata.rpm]
-package = "chirpstack"
+[package.metadata.generate-rpm]
+pre_install_script = '''
+id chirpstack &>/dev/null
+if [[ $? -ne 0 ]]; then
+	useradd --system -U -M chirpstack -s /bin/false -d /etc/chirpstack
+fi
+'''
 
-[package.metadata.rpm.files]
-"configuration/" = { path = "/etc/chirpstack/" }
-"chirpstack.service" = { path = "/lib/systemd/system/chirpstack.service" }
+post_install_script = '''
+chown -R chirpstack:chirpstack /etc/chirpstack
+chmod 750 /etc/chirpstack
+chmod 640 /etc/chirpstack/*.toml
 
-[package.metadata.rpm.cargo]
-buildflags = ["--release"]
+sed -i "s/\$MQTT_BROKER_HOST/localhost/" /etc/chirpstack/*.toml
+sed -i "s/\$POSTGRESQL_HOST/localhost/" /etc/chirpstack/*.toml
+sed -i "s/\$REDIS_HOST/localhost/" /etc/chirpstack/*.toml
+'''
 
-[package.metadata.rpm.targets]
-chirpstack = { path = "/usr/bin/chirpstack" }
+assets = [
+	{ source = "target/release/chirpstack", dest = "/usr/bin/chirpstack", mode = "755" },
+	{ source = "configuration/*", dest = "/etc/chirpstack"},
+	{ source = "rpm/chirpstack.service", dest = "/lib/systemd/system/chirpstack.service"},
+]

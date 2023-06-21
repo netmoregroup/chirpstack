@@ -11,7 +11,8 @@ use tokio::time::sleep;
 use crate::gateway::backend::mock as gateway_mock;
 use crate::integration::mock;
 use crate::storage::{
-    device, device_queue, device_session, downlink_frame, get_redis_conn, redis_key,
+    device::{self, DeviceClass},
+    device_queue, device_session, downlink_frame, get_redis_conn, redis_key,
 };
 use chirpstack_api::{api, gw, integration as integration_pb, internal, meta};
 use lrwn::EUI64;
@@ -101,7 +102,7 @@ pub fn mac_command_error_count(dev_eui: EUI64, cid: lrwn::CID, count: u32) -> Va
             assert_eq!(
                 count,
                 ds.mac_command_error_count
-                    .get(&(cid.byte() as u32))
+                    .get(&(cid.to_u8() as u32))
                     .cloned()
                     .unwrap_or(0)
             )
@@ -143,9 +144,7 @@ pub fn no_uplink_event() -> Validator {
         Box::pin(async move {
             // Integration events are handled async.
             sleep(Duration::from_millis(100)).await;
-
-            let mock_events = mock::get_uplink_events().await;
-            assert_eq!(0, mock_events.len());
+            assert!(mock::get_uplink_event().await.is_none());
         })
     })
 }
@@ -157,15 +156,14 @@ pub fn uplink_event(up: integration_pb::UplinkEvent) -> Validator {
             // Integration events are handled async.
             sleep(Duration::from_millis(100)).await;
 
-            let mut mock_events = mock::get_uplink_events().await;
-            assert_eq!(1, mock_events.len());
+            let mut event = mock::get_uplink_event().await.unwrap();
 
-            assert_ne!("", mock_events[0].deduplication_id);
-            assert_ne!(None, mock_events[0].time);
+            assert_ne!("", event.deduplication_id);
+            assert_ne!(None, event.time);
 
-            mock_events[0].deduplication_id = "".into();
-            mock_events[0].time = None;
-            assert_eq!(up, mock_events[0]);
+            event.deduplication_id = "".into();
+            event.time = None;
+            assert_eq!(up, event);
         })
     })
 }
@@ -206,6 +204,15 @@ pub fn status_event(st: integration_pb::StatusEvent) -> Validator {
             mock_events[0].deduplication_id = "".into();
             mock_events[0].time = None;
             assert_eq!(st, mock_events[0]);
+        })
+    })
+}
+
+pub fn device_join_eui(dev_eui: EUI64, join_eui: EUI64) -> Validator {
+    Box::new(move || {
+        Box::pin(async move {
+            let d = device::get(&dev_eui).await.unwrap();
+            assert_eq!(join_eui, d.join_eui);
         })
     })
 }
@@ -356,7 +363,7 @@ pub fn device_queue_items(dev_eui: EUI64, items: Vec<device_queue::DeviceQueueIt
     })
 }
 
-pub fn enabled_class(dev_eui: EUI64, c: String) -> Validator {
+pub fn enabled_class(dev_eui: EUI64, c: DeviceClass) -> Validator {
     Box::new(move || {
         let c = c.clone();
         let dev_eui = dev_eui.clone();

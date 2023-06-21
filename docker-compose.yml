@@ -5,10 +5,6 @@ services:
       dockerfile: Dockerfile-devel
     volumes:
       - ./:/chirpstack
-      - ./.rust/target:/chirpstack/target
-      - ./.rust/.cargo/registry/index:/usr/local/cargo/registry/index
-      - ./.rust/.cargo/registry/cache:/usr/local/cargo/registry/cache
-      - ./.rust/.cargo/git/db:/usr/local/cargo/git/db
     depends_on:
       - postgres
       - redis
@@ -20,20 +16,13 @@ services:
       - REDIS_HOST=redis
       - POSTGRESQL_HOST=postgres
       - MQTT_BROKER_HOST=mosquitto
+      - TEST_POSTGRESQL_DSN=postgres://chirpstack_test:chirpstack_test@postgres/chirpstack_test?sslmode=disable
+      - TEST_REDIS_URL=redis://redis/1
+      - TEST_MOSQUITTO_SERVER=tcp://mosquitto:1883/
+      - TEST_KAFKA_BROKER=kafka:9092
+      - TEST_AMQP_URL=amqp://guest:guest@rabbitmq:5672
     ports:
       - "8080:8080"
-
-  chirpstack-build-amd64:
-    image: chirpstack/chirpstack-dev-cache:latest
-    platform: linux/amd64
-    volumes:
-      - ./:/chirpstack
-
-  chirpstack-build-arm64:
-    image: chirpstack/chirpstack-dev-cache:latest
-    platform: linux/arm64
-    volumes:
-      - ./:/chirpstack
 
   chirpstack-ui:
     build:
@@ -51,6 +40,8 @@ services:
       - ./.docker-compose/postgresql/initdb:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
 
   redis:
     image: redis:6-alpine
@@ -66,6 +57,7 @@ services:
     image: rabbitmq:3-management-alpine
     ports:
       - "15672:15672"
+      - "5672:5672"
 
   zookeeper:
     image: 'bitnami/zookeeper:3'
@@ -77,8 +69,10 @@ services:
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+    ports:
+      - "9092:9092"
