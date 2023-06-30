@@ -2,7 +2,7 @@ use chrono::{DateTime, Utc};
 
 use crate::codec::Codec;
 use crate::storage::fields::{MeasurementKind, MulticastGroupSchedulingType};
-use crate::storage::metrics::Aggregation;
+use crate::storage::{device::DeviceClass, metrics::Aggregation};
 use chirpstack_api::{api, common};
 use lrwn::region::{CommonName, MacVersion, Revision};
 
@@ -215,6 +215,46 @@ impl FromProto<MulticastGroupSchedulingType> for api::MulticastGroupSchedulingTy
         match self {
             api::MulticastGroupSchedulingType::Delay => MulticastGroupSchedulingType::DELAY,
             api::MulticastGroupSchedulingType::GpsTime => MulticastGroupSchedulingType::GPS_TIME,
+        }
+    }
+}
+
+impl ToProto<api::RelayModeActivation> for lrwn::RelayModeActivation {
+    fn to_proto(self) -> api::RelayModeActivation {
+        match self {
+            lrwn::RelayModeActivation::DisableRelayMode => {
+                api::RelayModeActivation::DisableRelayMode
+            }
+            lrwn::RelayModeActivation::EnableRelayMode => api::RelayModeActivation::EnableRelayMode,
+            lrwn::RelayModeActivation::Dynamic => api::RelayModeActivation::Dynamic,
+            lrwn::RelayModeActivation::EndDeviceControlled => {
+                api::RelayModeActivation::EndDeviceControlled
+            }
+        }
+    }
+}
+
+impl FromProto<lrwn::RelayModeActivation> for api::RelayModeActivation {
+    fn from_proto(self) -> lrwn::RelayModeActivation {
+        match self {
+            api::RelayModeActivation::DisableRelayMode => {
+                lrwn::RelayModeActivation::DisableRelayMode
+            }
+            api::RelayModeActivation::EnableRelayMode => lrwn::RelayModeActivation::EnableRelayMode,
+            api::RelayModeActivation::Dynamic => lrwn::RelayModeActivation::Dynamic,
+            api::RelayModeActivation::EndDeviceControlled => {
+                lrwn::RelayModeActivation::EndDeviceControlled
+            }
+        }
+    }
+}
+
+impl ToProto<common::DeviceClass> for DeviceClass {
+    fn to_proto(self) -> common::DeviceClass {
+        match self {
+            DeviceClass::A => common::DeviceClass::ClassA,
+            DeviceClass::B => common::DeviceClass::ClassB,
+            DeviceClass::C => common::DeviceClass::ClassC,
         }
     }
 }

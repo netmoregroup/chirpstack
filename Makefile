@@ -2,7 +2,15 @@
 
 # Build distributable binaries.
 dist:
-	docker-compose run --rm --no-deps chirpstack make dist
+	cd chirpstack && make dist
+
+# Install dev dependencies
+dev-dependencies:
+	cargo install cross --version 0.2.5
+	cargo install diesel_cli --version 2.1.0 --no-default-features --features postgres
+	cargo install cargo-deb --version 1.43.1
+	cargo install cargo-bitbake --version 0.3.16
+	cargo install cargo-generate-rpm --version 0.11.0
 
 # Set the versions
 version:
@@ -34,25 +42,21 @@ api: version
 build-ui:
 	docker-compose run --rm --no-deps chirpstack-ui make build
 
-# Enters the devshell for ChirpStack development.
+# Enter the devshell.
 devshell:
-	docker-compose run --rm --service-ports --name chirpstack chirpstack bash
+	nix-shell
+
+# Enters the Docker devshell for ChirpStack development.
+docker-devshell:
+	docker-compose run --rm --service-ports --name chirpstack chirpstack
 
 # Enters the devshell for ChirpStack UI development.
-devshell-ui:
+docker-devshell-ui:
 	docker-compose run --rm --service-ports --name chirpstack-ui chirpstack-ui bash
 
 # Runs the tests
 test:
-	docker-compose run --rm chirpstack make test
-	docker-compose run --rm chirpstack make test-lrwn
-	docker-compose run --rm chirpstack make test-lrwn-filters
-
-# Starts the ChirpStack server (for testing only).
-test-server: build-ui
-	docker-compose run --rm --service-ports chirpstack make test-server
-
-# Update the Docker development images
-update-images:
-	docker-compose build chirpstack
-	docker-compose build chirpstack-ui
+	cd backend && cargo test
+	cd chirpstack && make test
+	cd lrwn && make test
+	cd lrwn-filters && make test
