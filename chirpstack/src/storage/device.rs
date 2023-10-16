@@ -95,6 +95,7 @@ pub struct Device {
     pub tags: fields::KeyValue,
     pub variables: fields::KeyValue,
     pub join_eui: EUI64,
+    pub device_status_battery_raw: i16,
 }
 
 impl Device {
@@ -134,6 +135,7 @@ impl Default for Device {
             tags: fields::KeyValue::new(HashMap::new()),
             variables: fields::KeyValue::new(HashMap::new()),
             join_eui: EUI64::default(),
+            device_status_battery_raw: 255,
         }
     }
 }
@@ -323,12 +325,14 @@ pub async fn set_status(
     margin: i32,
     external_power_source: bool,
     battery_level: Option<BigDecimal>,
+    battery_raw: i16,
 ) -> Result<Device, Error> {
     let d: Device = diesel::update(device::dsl::device.find(&dev_eui))
         .set((
             device::margin.eq(Some(margin)),
             device::external_power_source.eq(external_power_source),
             device::battery_level.eq(battery_level),
+            device::device_status_battery_raw.eq(battery_raw),
         ))
         .get_result(&mut get_async_db_conn().await?)
         .await

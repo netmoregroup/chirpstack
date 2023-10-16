@@ -33,6 +33,7 @@ pub async fn handle(
             } else {
                 None
             },
+            pl.battery as i16,
         )
         .await?;
 

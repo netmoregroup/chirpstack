@@ -63,6 +63,7 @@ diesel::table! {
         tags -> Jsonb,
         variables -> Jsonb,
         join_eui -> Bytea,
+        device_status_battery_raw -> Int2,
     }
 }
 

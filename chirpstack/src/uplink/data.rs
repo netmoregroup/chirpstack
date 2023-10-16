@@ -943,7 +943,7 @@ impl Data {
             relay_rx_info: self.relay_rx_info.clone(),
             dev_addr: mac.fhdr.devaddr.to_string(),
             adr: mac.fhdr.f_ctrl.adr,
-            ack: mac.fhdr.f_ctrl.ack,
+
             dr: self.uplink_frame_set.dr as u32,
             f_cnt: self.f_cnt_up_full,
             f_port: mac.f_port.unwrap_or(0) as u32,
@@ -963,6 +963,8 @@ impl Data {
             } else {
                 None
             },
+            ack: mac.fhdr.f_ctrl.ack,
+            battery: dev.device_status_battery_raw as u32,
         };
 
         if !self._is_end_to_end_encrypted() {

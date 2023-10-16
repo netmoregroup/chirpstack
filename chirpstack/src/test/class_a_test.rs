@@ -849,6 +849,7 @@ async fn test_lorawan_10_skip_f_cnt() {
                     rx_info: vec![rx_info.clone()],
                     f_cnt: 7,
                     f_port: 1,
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::f_cnt_up(dev.dev_eui.clone(), 8),
@@ -897,6 +898,7 @@ async fn test_lorawan_10_skip_f_cnt() {
                     rx_info: vec![rx_info.clone()],
                     f_cnt: 0,
                     f_port: 1,
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::f_cnt_up(dev.dev_eui.clone(), 1),
@@ -1178,6 +1180,7 @@ async fn test_lorawan_10_uplink() {
                     f_port: 1,
                     dr: 0,
                     data: vec![215, 241, 112, 52],
+                    battery: 255,
                     ..Default::default()
                 }),
             ],
@@ -1249,6 +1252,7 @@ async fn test_lorawan_10_uplink() {
                     f_port: 1,
                     dr: 10,
                     data: vec![215, 241, 112, 52],
+                    battery: 255,
                     ..Default::default()
                 }),
             ],
@@ -1328,6 +1332,7 @@ async fn test_lorawan_10_uplink() {
                     dr: 0,
                     data: vec![215, 241, 112, 52],
                     ack: true,
+                    battery: 255,
                     ..Default::default()
                 }),
             ],
@@ -1378,6 +1383,7 @@ async fn test_lorawan_10_uplink() {
                     f_port: 1,
                     dr: 0,
                     data: vec![],
+                    battery: 255,
                     ..Default::default()
                 }),
             ],
@@ -1429,6 +1435,7 @@ async fn test_lorawan_10_uplink() {
                     dr: 0,
                     confirmed: true,
                     data: vec![215, 241, 112, 52],
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::downlink_frame(gw::DownlinkFrame {
@@ -1539,6 +1546,7 @@ async fn test_lorawan_10_uplink() {
                     f_port: 1,
                     dr: 0,
                     confirmed: true,
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::downlink_frame(gw::DownlinkFrame {
@@ -1812,6 +1820,7 @@ async fn test_lorawan_10_end_to_end_enc() {
                     session_key_id: "010203".into(),
                     ..Default::default()
                 }),
+                battery: 255,
                 ..Default::default()
             })],
         },
@@ -1865,6 +1874,7 @@ async fn test_lorawan_10_end_to_end_enc() {
                     }),
                     ..Default::default()
                 }),
+                battery: 255,
                 ..Default::default()
             })],
         },
@@ -1927,6 +1937,7 @@ async fn test_lorawan_10_end_to_end_enc() {
                         }),
                         ..Default::default()
                     }),
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::f_cnt_up(dev.dev_eui.clone(), 11),
@@ -2127,6 +2138,7 @@ async fn test_lorawan_11_uplink() {
                     f_port: 1,
                     dr: 0,
                     data: vec![215, 241, 112, 52],
+                    battery: 255,
                     ..Default::default()
                 }),
             ],
@@ -2206,6 +2218,7 @@ async fn test_lorawan_11_uplink() {
                     dr: 0,
                     data: vec![215, 241, 112, 52],
                     ack: true,
+                    battery: 255,
                     ..Default::default()
                 }),
             ],
@@ -2364,6 +2377,7 @@ async fn test_lorawan_10_rx_delay() {
                 f_port: 1,
                 confirmed: true,
                 dr: 0,
+                battery: 255,
                 ..Default::default()
             }),
             assert::downlink_frame(gw::DownlinkFrame {

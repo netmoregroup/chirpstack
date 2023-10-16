@@ -467,6 +467,7 @@ async fn test_lorawan_10() {
                     data: vec![],
                     rx_info: vec![rx_info.clone()],
                     tx_info: Some(tx_info.clone()),
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::uplink_event(integration_pb::UplinkEvent {
@@ -496,6 +497,7 @@ async fn test_lorawan_10() {
                         rssi: -100,
                         wor_channel: 0,
                     }),
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::no_downlink_frame(),
@@ -531,6 +533,7 @@ async fn test_lorawan_10() {
                     data: vec![],
                     rx_info: vec![rx_info.clone()],
                     tx_info: Some(tx_info.clone()),
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::uplink_event(integration_pb::UplinkEvent {
@@ -561,6 +564,7 @@ async fn test_lorawan_10() {
                         rssi: -100,
                         wor_channel: 0,
                     }),
+                    battery: 255,
                     ..Default::default()
                 }),
                 assert::downlink_frame(gw::DownlinkFrame {
