@@ -190,6 +190,12 @@ export class UplinkEvent extends jspb.Message {
   getJoinServerContext(): JoinServerContext | undefined;
   setJoinServerContext(value?: JoinServerContext): void;
 
+  getAck(): boolean;
+  setAck(value: boolean): void;
+
+  getBattery(): number;
+  setBattery(value: number): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UplinkEvent.AsObject;
   static toObject(includeInstance: boolean, msg: UplinkEvent): UplinkEvent.AsObject;
@@ -217,6 +223,8 @@ export namespace UplinkEvent {
     txInfo?: gw_gw_pb.UplinkTxInfo.AsObject,
     relayRxInfo?: UplinkRelayRxInfo.AsObject,
     joinServerContext?: JoinServerContext.AsObject,
+    ack: boolean,
+    battery: number,
   }
 }
 

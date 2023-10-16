@@ -100,7 +100,7 @@ class JoinServerContext(_message.Message):
     def __init__(self, session_key_id: _Optional[str] = ..., app_s_key: _Optional[_Union[_common_pb2.KeyEnvelope, _Mapping]] = ...) -> None: ...
 
 class UplinkEvent(_message.Message):
-    __slots__ = ("deduplication_id", "time", "device_info", "dev_addr", "adr", "dr", "f_cnt", "f_port", "confirmed", "data", "object", "rx_info", "tx_info", "relay_rx_info", "join_server_context")
+    __slots__ = ("deduplication_id", "time", "device_info", "dev_addr", "adr", "dr", "f_cnt", "f_port", "confirmed", "data", "object", "rx_info", "tx_info", "relay_rx_info", "join_server_context", "ack", "battery")
     DEDUPLICATION_ID_FIELD_NUMBER: _ClassVar[int]
     TIME_FIELD_NUMBER: _ClassVar[int]
     DEVICE_INFO_FIELD_NUMBER: _ClassVar[int]
@@ -116,6 +116,8 @@ class UplinkEvent(_message.Message):
     TX_INFO_FIELD_NUMBER: _ClassVar[int]
     RELAY_RX_INFO_FIELD_NUMBER: _ClassVar[int]
     JOIN_SERVER_CONTEXT_FIELD_NUMBER: _ClassVar[int]
+    ACK_FIELD_NUMBER: _ClassVar[int]
+    BATTERY_FIELD_NUMBER: _ClassVar[int]
     deduplication_id: str
     time: _timestamp_pb2.Timestamp
     device_info: DeviceInfo
@@ -131,7 +133,9 @@ class UplinkEvent(_message.Message):
     tx_info: _gw_pb2.UplinkTxInfo
     relay_rx_info: UplinkRelayRxInfo
     join_server_context: JoinServerContext
-    def __init__(self, deduplication_id: _Optional[str] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., device_info: _Optional[_Union[DeviceInfo, _Mapping]] = ..., dev_addr: _Optional[str] = ..., adr: bool = ..., dr: _Optional[int] = ..., f_cnt: _Optional[int] = ..., f_port: _Optional[int] = ..., confirmed: bool = ..., data: _Optional[bytes] = ..., object: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., rx_info: _Optional[_Iterable[_Union[_gw_pb2.UplinkRxInfo, _Mapping]]] = ..., tx_info: _Optional[_Union[_gw_pb2.UplinkTxInfo, _Mapping]] = ..., relay_rx_info: _Optional[_Union[UplinkRelayRxInfo, _Mapping]] = ..., join_server_context: _Optional[_Union[JoinServerContext, _Mapping]] = ...) -> None: ...
+    ack: bool
+    battery: int
+    def __init__(self, deduplication_id: _Optional[str] = ..., time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., device_info: _Optional[_Union[DeviceInfo, _Mapping]] = ..., dev_addr: _Optional[str] = ..., adr: bool = ..., dr: _Optional[int] = ..., f_cnt: _Optional[int] = ..., f_port: _Optional[int] = ..., confirmed: bool = ..., data: _Optional[bytes] = ..., object: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., rx_info: _Optional[_Iterable[_Union[_gw_pb2.UplinkRxInfo, _Mapping]]] = ..., tx_info: _Optional[_Union[_gw_pb2.UplinkTxInfo, _Mapping]] = ..., relay_rx_info: _Optional[_Union[UplinkRelayRxInfo, _Mapping]] = ..., join_server_context: _Optional[_Union[JoinServerContext, _Mapping]] = ..., ack: bool = ..., battery: _Optional[int] = ...) -> None: ...
 
 class JoinEvent(_message.Message):
     __slots__ = ("deduplication_id", "time", "device_info", "dev_addr", "relay_rx_info", "join_server_context")

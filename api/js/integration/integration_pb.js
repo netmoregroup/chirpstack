@@ -108,7 +108,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.integration.UplinkEvent = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.integration.UplinkEvent.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, 500, proto.integration.UplinkEvent.repeatedFields_, null);
 };
 goog.inherits(proto.integration.UplinkEvent, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -1204,7 +1204,9 @@ proto.integration.UplinkEvent.toObject = function(includeInstance, msg) {
     gw_gw_pb.UplinkRxInfo.toObject, includeInstance),
     txInfo: (f = msg.getTxInfo()) && gw_gw_pb.UplinkTxInfo.toObject(includeInstance, f),
     relayRxInfo: (f = msg.getRelayRxInfo()) && proto.integration.UplinkRelayRxInfo.toObject(includeInstance, f),
-    joinServerContext: (f = msg.getJoinServerContext()) && proto.integration.JoinServerContext.toObject(includeInstance, f)
+    joinServerContext: (f = msg.getJoinServerContext()) && proto.integration.JoinServerContext.toObject(includeInstance, f),
+    ack: jspb.Message.getBooleanFieldWithDefault(msg, 1000, false),
+    battery: jspb.Message.getFieldWithDefault(msg, 1001, 0)
   };
 
   if (includeInstance) {
@@ -1307,6 +1309,14 @@ proto.integration.UplinkEvent.deserializeBinaryFromReader = function(msg, reader
       var value = new proto.integration.JoinServerContext;
       reader.readMessage(value,proto.integration.JoinServerContext.deserializeBinaryFromReader);
       msg.setJoinServerContext(value);
+      break;
+    case 1000:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setAck(value);
+      break;
+    case 1001:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setBattery(value);
       break;
     default:
       reader.skipField();
@@ -1447,6 +1457,20 @@ proto.integration.UplinkEvent.serializeBinaryToWriter = function(message, writer
       15,
       f,
       proto.integration.JoinServerContext.serializeBinaryToWriter
+    );
+  }
+  f = message.getAck();
+  if (f) {
+    writer.writeBool(
+      1000,
+      f
+    );
+  }
+  f = message.getBattery();
+  if (f !== 0) {
+    writer.writeUint32(
+      1001,
+      f
     );
   }
 };
@@ -1877,6 +1901,42 @@ proto.integration.UplinkEvent.prototype.clearJoinServerContext = function() {
  */
 proto.integration.UplinkEvent.prototype.hasJoinServerContext = function() {
   return jspb.Message.getField(this, 15) != null;
+};
+
+
+/**
+ * optional bool ack = 1000;
+ * @return {boolean}
+ */
+proto.integration.UplinkEvent.prototype.getAck = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1000, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.integration.UplinkEvent} returns this
+ */
+proto.integration.UplinkEvent.prototype.setAck = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 1000, value);
+};
+
+
+/**
+ * optional uint32 battery = 1001;
+ * @return {number}
+ */
+proto.integration.UplinkEvent.prototype.getBattery = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1001, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.integration.UplinkEvent} returns this
+ */
+proto.integration.UplinkEvent.prototype.setBattery = function(value) {
+  return jspb.Message.setProto3IntField(this, 1001, value);
 };
 
 

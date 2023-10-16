@@ -178,6 +178,9 @@ message UplinkEvent {
 
   // Uplink ACK bit is set.
   bool ack = 1000;
+
+  // Raw battery status.
+  uint32 battery = 1001;
 }
 
 // JoinEvent is the message sent when a device joined the network.

@@ -39,7 +39,7 @@ namespace Chirpstack.Integration {
             "KA0SCgoCZHIYAyABKA0SCwoDc25yGAQgASgFEgwKBHJzc2kYBSABKAUSEwoL",
             "d29yX2NoYW5uZWwYBiABKA0iUwoRSm9pblNlcnZlckNvbnRleHQSFgoOc2Vz",
             "c2lvbl9rZXlfaWQYASABKAkSJgoJYXBwX3Nfa2V5GAIgASgLMhMuY29tbW9u",
-            "LktleUVudmVsb3BlIs0DCgtVcGxpbmtFdmVudBIYChBkZWR1cGxpY2F0aW9u",
+            "LktleUVudmVsb3BlIu0DCgtVcGxpbmtFdmVudBIYChBkZWR1cGxpY2F0aW9u",
             "X2lkGAEgASgJEigKBHRpbWUYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGlt",
             "ZXN0YW1wEiwKC2RldmljZV9pbmZvGAMgASgLMhcuaW50ZWdyYXRpb24uRGV2",
             "aWNlSW5mbxIQCghkZXZfYWRkchgEIAEoCRILCgNhZHIYBSABKAgSCgoCZHIY",
@@ -49,62 +49,63 @@ namespace Chirpstack.Integration {
             "bGlua1J4SW5mbxIhCgd0eF9pbmZvGA0gASgLMhAuZ3cuVXBsaW5rVHhJbmZv",
             "EjUKDXJlbGF5X3J4X2luZm8YDiABKAsyHi5pbnRlZ3JhdGlvbi5VcGxpbmtS",
             "ZWxheVJ4SW5mbxI7ChNqb2luX3NlcnZlcl9jb250ZXh0GA8gASgLMh4uaW50",
-            "ZWdyYXRpb24uSm9pblNlcnZlckNvbnRleHQigwIKCUpvaW5FdmVudBIYChBk",
-            "ZWR1cGxpY2F0aW9uX2lkGAEgASgJEigKBHRpbWUYAiABKAsyGi5nb29nbGUu",
-            "cHJvdG9idWYuVGltZXN0YW1wEiwKC2RldmljZV9pbmZvGAMgASgLMhcuaW50",
-            "ZWdyYXRpb24uRGV2aWNlSW5mbxIQCghkZXZfYWRkchgEIAEoCRI1Cg1yZWxh",
-            "eV9yeF9pbmZvGAUgASgLMh4uaW50ZWdyYXRpb24uVXBsaW5rUmVsYXlSeElu",
-            "Zm8SOwoTam9pbl9zZXJ2ZXJfY29udGV4dBgGIAEoCzIeLmludGVncmF0aW9u",
-            "LkpvaW5TZXJ2ZXJDb250ZXh0Ir0BCghBY2tFdmVudBIYChBkZWR1cGxpY2F0",
-            "aW9uX2lkGAEgASgJEigKBHRpbWUYAiABKAsyGi5nb29nbGUucHJvdG9idWYu",
-            "VGltZXN0YW1wEiwKC2RldmljZV9pbmZvGAMgASgLMhcuaW50ZWdyYXRpb24u",
-            "RGV2aWNlSW5mbxIVCg1xdWV1ZV9pdGVtX2lkGAQgASgJEhQKDGFja25vd2xl",
-            "ZGdlZBgFIAEoCBISCgpmX2NudF9kb3duGAYgASgNIt0BCgpUeEFja0V2ZW50",
-            "EhMKC2Rvd25saW5rX2lkGAEgASgNEigKBHRpbWUYAiABKAsyGi5nb29nbGUu",
-            "cHJvdG9idWYuVGltZXN0YW1wEiwKC2RldmljZV9pbmZvGAMgASgLMhcuaW50",
-            "ZWdyYXRpb24uRGV2aWNlSW5mbxIVCg1xdWV1ZV9pdGVtX2lkGAQgASgJEhIK",
-            "CmZfY250X2Rvd24YBSABKA0SEgoKZ2F0ZXdheV9pZBgGIAEoCRIjCgd0eF9p",
-            "bmZvGAcgASgLMhIuZ3cuRG93bmxpbmtUeEluZm8ipgIKCExvZ0V2ZW50EigK",
-            "BHRpbWUYASABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiwKC2Rl",
-            "dmljZV9pbmZvGAIgASgLMhcuaW50ZWdyYXRpb24uRGV2aWNlSW5mbxIkCgVs",
-            "ZXZlbBgDIAEoDjIVLmludGVncmF0aW9uLkxvZ0xldmVsEiIKBGNvZGUYBCAB",
-            "KA4yFC5pbnRlZ3JhdGlvbi5Mb2dDb2RlEhMKC2Rlc2NyaXB0aW9uGAUgASgJ",
-            "EjMKB2NvbnRleHQYBiADKAsyIi5pbnRlZ3JhdGlvbi5Mb2dFdmVudC5Db250",
-            "ZXh0RW50cnkaLgoMQ29udGV4dEVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1",
-            "ZRgCIAEoCToCOAEi6AEKC1N0YXR1c0V2ZW50EhgKEGRlZHVwbGljYXRpb25f",
+            "ZWdyYXRpb24uSm9pblNlcnZlckNvbnRleHQSDAoDYWNrGOgHIAEoCBIQCgdi",
+            "YXR0ZXJ5GOkHIAEoDSKDAgoJSm9pbkV2ZW50EhgKEGRlZHVwbGljYXRpb25f",
             "aWQYASABKAkSKAoEdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
             "c3RhbXASLAoLZGV2aWNlX2luZm8YAyABKAsyFy5pbnRlZ3JhdGlvbi5EZXZp",
-            "Y2VJbmZvEg4KBm1hcmdpbhgFIAEoBRIdChVleHRlcm5hbF9wb3dlcl9zb3Vy",
-            "Y2UYBiABKAgSIQoZYmF0dGVyeV9sZXZlbF91bmF2YWlsYWJsZRgHIAEoCBIV",
-            "Cg1iYXR0ZXJ5X2xldmVsGAggASgCIqUBCg1Mb2NhdGlvbkV2ZW50EhgKEGRl",
-            "ZHVwbGljYXRpb25faWQYASABKAkSKAoEdGltZRgCIAEoCzIaLmdvb2dsZS5w",
-            "cm90b2J1Zi5UaW1lc3RhbXASLAoLZGV2aWNlX2luZm8YAyABKAsyFy5pbnRl",
-            "Z3JhdGlvbi5EZXZpY2VJbmZvEiIKCGxvY2F0aW9uGAQgASgLMhAuY29tbW9u",
-            "LkxvY2F0aW9uItsBChBJbnRlZ3JhdGlvbkV2ZW50EhgKEGRlZHVwbGljYXRp",
-            "b25faWQYASABKAkSKAoEdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U",
-            "aW1lc3RhbXASLAoLZGV2aWNlX2luZm8YAyABKAsyFy5pbnRlZ3JhdGlvbi5E",
-            "ZXZpY2VJbmZvEhgKEGludGVncmF0aW9uX25hbWUYBCABKAkSEgoKZXZlbnRf",
-            "dHlwZRgFIAEoCRInCgZvYmplY3QYBiABKAsyFy5nb29nbGUucHJvdG9idWYu",
-            "U3RydWN0IogBCg9Eb3dubGlua0NvbW1hbmQSCgoCaWQYASABKAkSDwoHZGV2",
-            "X2V1aRgCIAEoCRIRCgljb25maXJtZWQYAyABKAgSDgoGZl9wb3J0GAQgASgN",
-            "EgwKBGRhdGEYBSABKAwSJwoGb2JqZWN0GAYgASgLMhcuZ29vZ2xlLnByb3Rv",
-            "YnVmLlN0cnVjdCosCghMb2dMZXZlbBIICgRJTkZPEAASCwoHV0FSTklORxAB",
-            "EgkKBUVSUk9SEAIq6gEKB0xvZ0NvZGUSCwoHVU5LTk9XThAAEhkKFURPV05M",
-            "SU5LX1BBWUxPQURfU0laRRABEhAKDFVQTElOS19DT0RFQxACEhIKDkRPV05M",
-            "SU5LX0NPREVDEAMSCAoET1RBQRAEEhYKElVQTElOS19GX0NOVF9SRVNFVBAF",
-            "Eg4KClVQTElOS19NSUMQBhIfChtVUExJTktfRl9DTlRfUkVUUkFOU01JU1NJ",
-            "T04QBxIUChBET1dOTElOS19HQVRFV0FZEAgSGAoUUkVMQVlfTkVXX0VORF9E",
-            "RVZJQ0UQCRIOCgpGX0NOVF9ET1dOEApCgQEKHWlvLmNoaXJwc3RhY2suYXBp",
-            "LmludGVncmF0aW9uQhBJbnRlZ3JhdGlvblByb3RvUAFaM2dpdGh1Yi5jb20v",
-            "YnJvY2Fhci9jaGlycHN0YWNrL2FwaS9nby92NC9pbnRlZ3JhdGlvbqoCFkNo",
-            "aXJwc3RhY2suSW50ZWdyYXRpb25iBnByb3RvMw=="));
+            "Y2VJbmZvEhAKCGRldl9hZGRyGAQgASgJEjUKDXJlbGF5X3J4X2luZm8YBSAB",
+            "KAsyHi5pbnRlZ3JhdGlvbi5VcGxpbmtSZWxheVJ4SW5mbxI7ChNqb2luX3Nl",
+            "cnZlcl9jb250ZXh0GAYgASgLMh4uaW50ZWdyYXRpb24uSm9pblNlcnZlckNv",
+            "bnRleHQivQEKCEFja0V2ZW50EhgKEGRlZHVwbGljYXRpb25faWQYASABKAkS",
+            "KAoEdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLAoL",
+            "ZGV2aWNlX2luZm8YAyABKAsyFy5pbnRlZ3JhdGlvbi5EZXZpY2VJbmZvEhUK",
+            "DXF1ZXVlX2l0ZW1faWQYBCABKAkSFAoMYWNrbm93bGVkZ2VkGAUgASgIEhIK",
+            "CmZfY250X2Rvd24YBiABKA0i3QEKClR4QWNrRXZlbnQSEwoLZG93bmxpbmtf",
+            "aWQYASABKA0SKAoEdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
+            "c3RhbXASLAoLZGV2aWNlX2luZm8YAyABKAsyFy5pbnRlZ3JhdGlvbi5EZXZp",
+            "Y2VJbmZvEhUKDXF1ZXVlX2l0ZW1faWQYBCABKAkSEgoKZl9jbnRfZG93bhgF",
+            "IAEoDRISCgpnYXRld2F5X2lkGAYgASgJEiMKB3R4X2luZm8YByABKAsyEi5n",
+            "dy5Eb3dubGlua1R4SW5mbyKmAgoITG9nRXZlbnQSKAoEdGltZRgBIAEoCzIa",
+            "Lmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLAoLZGV2aWNlX2luZm8YAiAB",
+            "KAsyFy5pbnRlZ3JhdGlvbi5EZXZpY2VJbmZvEiQKBWxldmVsGAMgASgOMhUu",
+            "aW50ZWdyYXRpb24uTG9nTGV2ZWwSIgoEY29kZRgEIAEoDjIULmludGVncmF0",
+            "aW9uLkxvZ0NvZGUSEwoLZGVzY3JpcHRpb24YBSABKAkSMwoHY29udGV4dBgG",
+            "IAMoCzIiLmludGVncmF0aW9uLkxvZ0V2ZW50LkNvbnRleHRFbnRyeRouCgxD",
+            "b250ZXh0RW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4ASLo",
+            "AQoLU3RhdHVzRXZlbnQSGAoQZGVkdXBsaWNhdGlvbl9pZBgBIAEoCRIoCgR0",
+            "aW1lGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCgtkZXZp",
+            "Y2VfaW5mbxgDIAEoCzIXLmludGVncmF0aW9uLkRldmljZUluZm8SDgoGbWFy",
+            "Z2luGAUgASgFEh0KFWV4dGVybmFsX3Bvd2VyX3NvdXJjZRgGIAEoCBIhChli",
+            "YXR0ZXJ5X2xldmVsX3VuYXZhaWxhYmxlGAcgASgIEhUKDWJhdHRlcnlfbGV2",
+            "ZWwYCCABKAIipQEKDUxvY2F0aW9uRXZlbnQSGAoQZGVkdXBsaWNhdGlvbl9p",
+            "ZBgBIAEoCRIoCgR0aW1lGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVz",
+            "dGFtcBIsCgtkZXZpY2VfaW5mbxgDIAEoCzIXLmludGVncmF0aW9uLkRldmlj",
+            "ZUluZm8SIgoIbG9jYXRpb24YBCABKAsyEC5jb21tb24uTG9jYXRpb24i2wEK",
+            "EEludGVncmF0aW9uRXZlbnQSGAoQZGVkdXBsaWNhdGlvbl9pZBgBIAEoCRIo",
+            "CgR0aW1lGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIsCgtk",
+            "ZXZpY2VfaW5mbxgDIAEoCzIXLmludGVncmF0aW9uLkRldmljZUluZm8SGAoQ",
+            "aW50ZWdyYXRpb25fbmFtZRgEIAEoCRISCgpldmVudF90eXBlGAUgASgJEicK",
+            "Bm9iamVjdBgGIAEoCzIXLmdvb2dsZS5wcm90b2J1Zi5TdHJ1Y3QiiAEKD0Rv",
+            "d25saW5rQ29tbWFuZBIKCgJpZBgBIAEoCRIPCgdkZXZfZXVpGAIgASgJEhEK",
+            "CWNvbmZpcm1lZBgDIAEoCBIOCgZmX3BvcnQYBCABKA0SDAoEZGF0YRgFIAEo",
+            "DBInCgZvYmplY3QYBiABKAsyFy5nb29nbGUucHJvdG9idWYuU3RydWN0KiwK",
+            "CExvZ0xldmVsEggKBElORk8QABILCgdXQVJOSU5HEAESCQoFRVJST1IQAirq",
+            "AQoHTG9nQ29kZRILCgdVTktOT1dOEAASGQoVRE9XTkxJTktfUEFZTE9BRF9T",
+            "SVpFEAESEAoMVVBMSU5LX0NPREVDEAISEgoORE9XTkxJTktfQ09ERUMQAxII",
+            "CgRPVEFBEAQSFgoSVVBMSU5LX0ZfQ05UX1JFU0VUEAUSDgoKVVBMSU5LX01J",
+            "QxAGEh8KG1VQTElOS19GX0NOVF9SRVRSQU5TTUlTU0lPThAHEhQKEERPV05M",
+            "SU5LX0dBVEVXQVkQCBIYChRSRUxBWV9ORVdfRU5EX0RFVklDRRAJEg4KCkZf",
+            "Q05UX0RPV04QCkKBAQodaW8uY2hpcnBzdGFjay5hcGkuaW50ZWdyYXRpb25C",
+            "EEludGVncmF0aW9uUHJvdG9QAVozZ2l0aHViLmNvbS9icm9jYWFyL2NoaXJw",
+            "c3RhY2svYXBpL2dvL3Y0L2ludGVncmF0aW9uqgIWQ2hpcnBzdGFjay5JbnRl",
+            "Z3JhdGlvbmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Chirpstack.Common.CommonReflection.Descriptor, global::Chirpstack.Gateway.GwReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.StructReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chirpstack.Integration.LogLevel), typeof(global::Chirpstack.Integration.LogCode), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.DeviceInfo), global::Chirpstack.Integration.DeviceInfo.Parser, new[]{ "TenantId", "TenantName", "ApplicationId", "ApplicationName", "DeviceProfileId", "DeviceProfileName", "DeviceName", "DevEui", "DeviceClassEnabled", "Tags" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.UplinkRelayRxInfo), global::Chirpstack.Integration.UplinkRelayRxInfo.Parser, new[]{ "DevEui", "Frequency", "Dr", "Snr", "Rssi", "WorChannel" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.JoinServerContext), global::Chirpstack.Integration.JoinServerContext.Parser, new[]{ "SessionKeyId", "AppSKey" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.UplinkEvent), global::Chirpstack.Integration.UplinkEvent.Parser, new[]{ "DeduplicationId", "Time", "DeviceInfo", "DevAddr", "Adr", "Dr", "FCnt", "FPort", "Confirmed", "Data", "Object", "RxInfo", "TxInfo", "RelayRxInfo", "JoinServerContext" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.UplinkEvent), global::Chirpstack.Integration.UplinkEvent.Parser, new[]{ "DeduplicationId", "Time", "DeviceInfo", "DevAddr", "Adr", "Dr", "FCnt", "FPort", "Confirmed", "Data", "Object", "RxInfo", "TxInfo", "RelayRxInfo", "JoinServerContext", "Ack", "Battery" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.JoinEvent), global::Chirpstack.Integration.JoinEvent.Parser, new[]{ "DeduplicationId", "Time", "DeviceInfo", "DevAddr", "RelayRxInfo", "JoinServerContext" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.AckEvent), global::Chirpstack.Integration.AckEvent.Parser, new[]{ "DeduplicationId", "Time", "DeviceInfo", "QueueItemId", "Acknowledged", "FCntDown" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chirpstack.Integration.TxAckEvent), global::Chirpstack.Integration.TxAckEvent.Parser, new[]{ "DownlinkId", "Time", "DeviceInfo", "QueueItemId", "FCntDown", "GatewayId", "TxInfo" }, null, null, null, null),
@@ -1420,6 +1421,8 @@ namespace Chirpstack.Integration {
       txInfo_ = other.txInfo_ != null ? other.txInfo_.Clone() : null;
       relayRxInfo_ = other.relayRxInfo_ != null ? other.relayRxInfo_.Clone() : null;
       joinServerContext_ = other.joinServerContext_ != null ? other.joinServerContext_.Clone() : null;
+      ack_ = other.ack_;
+      battery_ = other.battery_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1657,6 +1660,36 @@ namespace Chirpstack.Integration {
       }
     }
 
+    /// <summary>Field number for the "ack" field.</summary>
+    public const int AckFieldNumber = 1000;
+    private bool ack_;
+    /// <summary>
+    /// Uplink ACK bit is set.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Ack {
+      get { return ack_; }
+      set {
+        ack_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "battery" field.</summary>
+    public const int BatteryFieldNumber = 1001;
+    private uint battery_;
+    /// <summary>
+    /// Raw battery status.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Battery {
+      get { return battery_; }
+      set {
+        battery_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -1687,6 +1720,8 @@ namespace Chirpstack.Integration {
       if (!object.Equals(TxInfo, other.TxInfo)) return false;
       if (!object.Equals(RelayRxInfo, other.RelayRxInfo)) return false;
       if (!object.Equals(JoinServerContext, other.JoinServerContext)) return false;
+      if (Ack != other.Ack) return false;
+      if (Battery != other.Battery) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1709,6 +1744,8 @@ namespace Chirpstack.Integration {
       if (txInfo_ != null) hash ^= TxInfo.GetHashCode();
       if (relayRxInfo_ != null) hash ^= RelayRxInfo.GetHashCode();
       if (joinServerContext_ != null) hash ^= JoinServerContext.GetHashCode();
+      if (Ack != false) hash ^= Ack.GetHashCode();
+      if (Battery != 0) hash ^= Battery.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1784,6 +1821,14 @@ namespace Chirpstack.Integration {
         output.WriteRawTag(122);
         output.WriteMessage(JoinServerContext);
       }
+      if (Ack != false) {
+        output.WriteRawTag(192, 62);
+        output.WriteBool(Ack);
+      }
+      if (Battery != 0) {
+        output.WriteRawTag(200, 62);
+        output.WriteUInt32(Battery);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1851,6 +1896,14 @@ namespace Chirpstack.Integration {
         output.WriteRawTag(122);
         output.WriteMessage(JoinServerContext);
       }
+      if (Ack != false) {
+        output.WriteRawTag(192, 62);
+        output.WriteBool(Ack);
+      }
+      if (Battery != 0) {
+        output.WriteRawTag(200, 62);
+        output.WriteUInt32(Battery);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1903,6 +1956,12 @@ namespace Chirpstack.Integration {
       }
       if (joinServerContext_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(JoinServerContext);
+      }
+      if (Ack != false) {
+        size += 2 + 1;
+      }
+      if (Battery != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeUInt32Size(Battery);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1976,6 +2035,12 @@ namespace Chirpstack.Integration {
           JoinServerContext = new global::Chirpstack.Integration.JoinServerContext();
         }
         JoinServerContext.MergeFrom(other.JoinServerContext);
+      }
+      if (other.Ack != false) {
+        Ack = other.Ack;
+      }
+      if (other.Battery != 0) {
+        Battery = other.Battery;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2070,6 +2135,14 @@ namespace Chirpstack.Integration {
             input.ReadMessage(JoinServerContext);
             break;
           }
+          case 8000: {
+            Ack = input.ReadBool();
+            break;
+          }
+          case 8008: {
+            Battery = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -2161,6 +2234,14 @@ namespace Chirpstack.Integration {
               JoinServerContext = new global::Chirpstack.Integration.JoinServerContext();
             }
             input.ReadMessage(JoinServerContext);
+            break;
+          }
+          case 8000: {
+            Ack = input.ReadBool();
+            break;
+          }
+          case 8008: {
+            Battery = input.ReadUInt32();
             break;
           }
         }
