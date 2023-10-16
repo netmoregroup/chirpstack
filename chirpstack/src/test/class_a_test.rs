@@ -1327,6 +1327,7 @@ async fn test_lorawan_10_uplink() {
                     f_port: 1,
                     dr: 0,
                     data: vec![215, 241, 112, 52],
+                    ack: true,
                     ..Default::default()
                 }),
             ],
@@ -2204,6 +2205,7 @@ async fn test_lorawan_11_uplink() {
                     f_port: 1,
                     dr: 0,
                     data: vec![215, 241, 112, 52],
+                    ack: true,
                     ..Default::default()
                 }),
             ],

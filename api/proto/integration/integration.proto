@@ -173,6 +173,11 @@ message UplinkEvent {
   // the AppSKey and that the encryption / decryption of the payloads is
   // the responsibility of the end-application.
   JoinServerContext join_server_context = 15;
+
+  // Custom fields (numbering starts at 1000).
+
+  // Uplink ACK bit is set.
+  bool ack = 1000;
 }
 
 // JoinEvent is the message sent when a device joined the network.

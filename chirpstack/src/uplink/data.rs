@@ -943,6 +943,7 @@ impl Data {
             relay_rx_info: self.relay_rx_info.clone(),
             dev_addr: mac.fhdr.devaddr.to_string(),
             adr: mac.fhdr.f_ctrl.adr,
+            ack: mac.fhdr.f_ctrl.ack,
             dr: self.uplink_frame_set.dr as u32,
             f_cnt: self.f_cnt_up_full,
             f_port: mac.f_port.unwrap_or(0) as u32,
