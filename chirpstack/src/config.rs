@@ -28,6 +28,7 @@ pub struct Configuration {
     pub user_authentication: UserAuthentication,
     pub join_server: JoinServer,
     pub backend_interfaces: BackendInterfaces,
+    pub message_logger: MessageLogger,
     pub roaming: Roaming,
     pub keks: Vec<Kek>,
     pub regions: Vec<Region>,
@@ -669,6 +670,47 @@ impl Default for GatewayChannel {
             modulation: GatewayChannelModulation::LORA,
             spreading_factors: vec![],
             datarate: 0,
+        }
+    }
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+#[serde(default)]
+pub struct MessageLogger {
+    pub mqtt: MessageLoggerBackendMqtt,
+}
+
+#[derive(Clone, Serialize, Deserialize)]
+#[serde(default)]
+pub struct MessageLoggerBackendMqtt {
+    pub log_topic: String,
+    pub servers: Vec<String>,
+    pub username: String,
+    pub password: String,
+    pub qos: usize,
+    pub clean_session: bool,
+    pub client_id: String,
+    pub ca_cert: String,
+    pub tls_cert: String,
+    pub tls_key: String,
+    #[serde(with = "humantime_serde")]
+    pub keep_alive_interval: Duration,
+}
+
+impl Default for MessageLoggerBackendMqtt {
+    fn default() -> Self {
+        MessageLoggerBackendMqtt {
+            log_topic: "".into(),
+            servers: vec![],
+            username: "".into(),
+            password: "".into(),
+            qos: 0,
+            clean_session: false,
+            client_id: "".into(),
+            ca_cert: "".into(),
+            tls_cert: "".into(),
+            tls_key: "".into(),
+            keep_alive_interval: Duration::from_secs(30),
         }
     }
 }
